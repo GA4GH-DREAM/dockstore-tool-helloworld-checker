@@ -1,0 +1,43 @@
+#!/usr/bin/env python
+import os
+import sys
+import json
+
+def get_md5(file_path):
+    """
+    Collect md5 checksum for file and return as string.
+    """
+    return os.popen("md5sum {}".format(file_path)).read().split()[0]
+
+def check_md5_equal(knowngood_path, helloworld_path):
+    """
+    Compare md5 checksum to that of known good output.
+    """
+    knownggood_md5 = get_md5(knowngood_path)
+    helloworld_md5 = get_md5(helloworld_path)
+    return 'PASS' if knownggood_md5 == helloworld_md5 else 'FAIL'
+
+def run_tests(knowngood_path, helloworld_path):
+    check_steps = {'md5_check': check_md5_equal}
+    check_results = {'Steps': {}}
+    for step in check_steps:
+        check_results['Steps'][step] = check_steps[step](
+            knowngood_path, helloworld_path
+        )
+    if any([result == 'FAIL' for result in check_results['Steps'].values()]):
+        check_results['Overall'] = 'FAIL'
+    else:
+        check_results['Overall'] = 'PASS'
+    return check_results
+
+
+def main(argv):
+    knowngood_path = argv[0]
+    helloworld_path = argv[1]
+
+    with open('results.json', 'w') as outfile:
+        json.dump(run_tests(knowngood_path, helloworld_path), outfile,
+                  indent=4)
+
+if __name__ == "__main__":
+    main(sys.argv[1:])
