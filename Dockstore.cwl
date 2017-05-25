@@ -17,7 +17,7 @@ dct:creator:
 
 requirements:
 - class: DockerRequirement
-  dockerPull: quay.io/jaeddy/dockstore-tool-helloworld-checker:1.1.0
+  dockerPull: quay.io/ga4gh-dream/dockstore-tool-helloworld-checker:1.1.1
 
 inputs:
   knowngood_file:
