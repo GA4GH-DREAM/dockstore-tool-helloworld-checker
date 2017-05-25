@@ -9,7 +9,7 @@ FROM ubuntu:16.04
 MAINTAINER James Eddy <james.a.eddy@gmail.com>
 
 # set version here to minimize need for edits below
-ENV VERSION=1.0.0
+ENV VERSION=1.1.0
 
 # set up packages
 USER root
