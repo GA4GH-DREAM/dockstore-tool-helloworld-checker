@@ -1,13 +1,22 @@
 #!/usr/bin/env python
+import logging
 import os
 import sys
 import json
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger('helloworld_check')
+hdlr = logging.FileHandler('log.txt')
+formatter = logging.Formatter('%(asctime)s %(name)-12s %(levelname)-8s %(message)s')
+hdlr.setFormatter(formatter)
+logger.addHandler(hdlr)
 
 def get_md5(file_path):
     """
     Collect md5 checksum for file and return as string.
     """
-    return os.popen("md5sum {}".format(file_path)).read().split()[0]
+    logger.info("getting MD5 checksum for file '{}'".format(file_path))
+    return os.popen("md5 {}".format(file_path)).read().split()[-1]
 
 def check_md5_equal(knowngood_path, helloworld_path):
     """
@@ -15,19 +24,23 @@ def check_md5_equal(knowngood_path, helloworld_path):
     """
     knownggood_md5 = get_md5(knowngood_path)
     helloworld_md5 = get_md5(helloworld_path)
-    return 'PASS' if knownggood_md5 == helloworld_md5 else 'FAIL'
+    logger.info("comparing two checksum values")
+    return knownggood_md5 == helloworld_md5
 
 def run_tests(knowngood_path, helloworld_path):
+    logger.info("running all tests...")
     check_steps = {'md5_check': check_md5_equal}
-    check_results = {'Steps': {}}
+    check_results = {'steps': {}}
     for step in check_steps:
-        check_results['Steps'][step] = check_steps[step](
+        logger.info("running test in step '{}'".format(step))
+        check_results['steps'][step] = check_steps[step](
             knowngood_path, helloworld_path
         )
-    if any([result == 'FAIL' for result in check_results['Steps'].values()]):
-        check_results['Overall'] = 'FAIL'
-    else:
-        check_results['Overall'] = 'PASS'
+        logger.info("passing status of step '{}' was '{}'"
+                    .format(step, check_results['steps'][step]))
+    check_results['overall'] = all(check_results['steps'].values())
+    logger.info("overall passing status was '{}'"
+                .format(check_results['overall']))
     return check_results
 
 
@@ -38,6 +51,7 @@ def main(argv):
     with open('results.json', 'w') as outfile:
         json.dump(run_tests(knowngood_path, helloworld_path), outfile,
                   indent=4)
+        logger.info("results saved to 'results.json'")
 
 if __name__ == "__main__":
     main(sys.argv[1:])
