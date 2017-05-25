@@ -16,7 +16,7 @@ def get_md5(file_path):
     Collect md5 checksum for file and return as string.
     """
     logger.info("getting MD5 checksum for file '{}'".format(file_path))
-    return os.popen("md5 {}".format(file_path)).read().split()[-1]
+    return os.popen("md5sum {}".format(file_path)).read().split()[0]
 
 def check_md5_equal(knowngood_path, helloworld_path):
     """
