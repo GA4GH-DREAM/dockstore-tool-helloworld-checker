@@ -5,11 +5,10 @@
 # Base Image
 FROM ubuntu:16.04
 
+LABEL version="1.1.2"
+
 # File Author / Maintainer
 MAINTAINER James Eddy <james.a.eddy@gmail.com>
-
-# set version here to minimize need for edits below
-ENV VERSION=1.1.1
 
 # set up packages
 USER root

@@ -17,7 +17,7 @@ dct:creator:
 
 requirements:
 - class: DockerRequirement
-  dockerPull: quay.io/ga4gh-dream/dockstore-tool-helloworld-checker:1.1.1
+  dockerPull: quay.io/ga4gh-dream/dockstore-tool-helloworld-checker:1.1.2
 
 inputs:
   knowngood_file:
@@ -31,9 +31,13 @@ inputs:
       position: 2
 
 outputs:
-  output:
+  results_file:
     type: File
     outputBinding:
       glob: "results.json"
+  log_file:
+    type: File
+    outputBinding:
+      glob: "log.txt"
 
 baseCommand: ["python", "/usr/local/bin/helloworld_check"]

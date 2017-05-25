@@ -1,14 +1,17 @@
 sudo: required
 
+env:
+  - VERSION="1.1.2"
+
 services:
   - docker
 
 before_install:
-  - docker build -t quay.io/jaeddy/dockstore-tool-helloworld-checker .
+  - docker build -t quay.io/ga4gh-dream/dockstore-tool-helloworld-checker:${VERSION} .
   - pip2.7 install --user setuptools==28.8.0
 
 install:
-  - pip2.7 install --user cwl-runner cwltool==1.0.20161114152756 schema-salad==1.18.20161005190847 avro==1.8.1
+  - pip2.7 install --user cwl-runner cwltool==1.0.20170217172322 schema-salad==2.2.20170222151604 avro==1.8.1
 
 script:
-  - cwltool --non-strict Dockstore.cwl test.json
+  - cwltool --non-strict Dockstore.cwl test.cwl.json

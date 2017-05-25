@@ -1,2 +1,6 @@
 # Dockstore data
 datastore
+
+# Tool outputs
+results.json
+log.txt
