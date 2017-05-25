@@ -1,8 +1,0 @@
-2017-05-24 20:27:11,267 helloworld_check INFO     running all tests...
-2017-05-24 20:27:11,267 helloworld_check INFO     running test in step 'md5_check'
-2017-05-24 20:27:11,267 helloworld_check INFO     getting MD5 checksum for file 'knownoutput.txt'
-2017-05-24 20:27:11,274 helloworld_check INFO     getting MD5 checksum for file 'helloworld.txt'
-2017-05-24 20:27:11,280 helloworld_check INFO     comparing two checksum values
-2017-05-24 20:27:11,280 helloworld_check INFO     passing status of step 'md5_check' was 'True'
-2017-05-24 20:27:11,280 helloworld_check INFO     overall passing status was 'True'
-2017-05-24 20:27:11,281 helloworld_check INFO     results saved to 'results.json'
